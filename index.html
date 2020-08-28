@@ -15,7 +15,7 @@
         />
       </div>
       <div class="heading">
-        <h1>Dumbest things Tronald ever said.</h1>
+        <h1>Dumbest things Tronald has ever said.</h1>
       </div>
     </header>
     <div class="wrapper">
@@ -45,14 +45,19 @@
       const baseurl = `https://api.tronalddump.io/random/quote`;
 
       async function getQuote() {
-        button.textContent = `Loading...`;
-        const response = await fetch(baseurl);
-        const data = await response.json();
-        const [tweetDate] = data.appeared_at.split("T");
-        tweetHeading.textContent = `What Tronald thinks about: ${data.tags[0]}`;
-        tweetData.textContent = `"${data.value}" - ${tweetDate}`;
-        button.textContent = `Generate Random tweet`;
+        try {
+          button.textContent = `Loading...`;
+          const response = await fetch(baseurl);
+          const data = await response.json();
+          const [tweetDate] = data.appeared_at.split("T");
+          tweetHeading.textContent = `What Tronald thinks about: ${data.tags[0]}`;
+          tweetData.textContent = `"${data.value}" - ${tweetDate}`;
+          button.textContent = `Generate Random tweet`;
+        } catch (error) {
+          tweetData.textContent = error;
+        }
       }
+      // on page load to show something
       getQuote();
 
       button.addEventListener("click", getQuote);
