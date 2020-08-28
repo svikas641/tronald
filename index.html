@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tronald Dump</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo-section">
+        <img
+          src="./donald-trump-wearing-red-nose.jpg"
+          alt="Dumbest things donald trump ever said."
+        />
+      </div>
+      <div class="heading">
+        <h1>Dumbest things Tronald ever said.</h1>
+      </div>
+    </header>
+    <div class="wrapper">
+      <main>
+        <div class="tweet-area">
+          <p class="tweet-heading"></p>
+          <hr />
+          <p class="tweet-data"></p>
+        </div>
+        <button>Generate Random tweet</button>
+      </main>
+    </div>
+    <footer>
+      <p>
+        Made with ♥ By
+        <a href="https://github.com/svikas641" target="_blank">Vikas Kumar</a>
+        using this super awesome api -
+        <a href="https://github.com/tronalddump-io/" target="_blank"
+          >tronalddump.io</a
+        >
+      </p>
+    </footer>
+    <script>
+      const tweetHeading = document.querySelector(".tweet-heading");
+      const tweetData = document.querySelector(".tweet-data");
+      const button = document.querySelector("button");
+      const baseurl = `https://api.tronalddump.io/random/quote`;
+
+      async function getQuote() {
+        button.textContent = `Loading...`;
+        const response = await fetch(baseurl);
+        const data = await response.json();
+        const [tweetDate] = data.appeared_at.split("T");
+        tweetHeading.textContent = `What Tronald thinks about: ${data.tags[0]}`;
+        tweetData.textContent = `"${data.value}" - ${tweetDate}`;
+        button.textContent = `Generate Random tweet`;
+      }
+      getQuote();
+
+      button.addEventListener("click", getQuote);
+    </script>
+  </body>
+</html>
